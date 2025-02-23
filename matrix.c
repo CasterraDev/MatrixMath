@@ -21,6 +21,7 @@ void matrixFill(Matrix* m, double val) {
 }
 
 void matrixIdentity(Matrix* m) {
+    assert(m->cols != m->rows);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             MAT_AT(m, i, j) = (i == j) ? 1 : 0;
@@ -29,6 +30,9 @@ void matrixIdentity(Matrix* m) {
 }
 
 char matrixIsIdentity(Matrix* m) {
+    if (m->cols != m->rows){
+        return 0;
+    }
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             if (i == j) {
