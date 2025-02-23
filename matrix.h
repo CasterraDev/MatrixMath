@@ -118,3 +118,8 @@ void matrixCopy(Matrix* dest, const Matrix* a);
  * @param a The matrix to shuffle
  */
 void matrixShuffleRows(Matrix* m);
+
+void matrixRowSwap(Matrix* m1, int row1, Matrix* m2, int row2);
+void matrixRowScalar(Matrix* m, int row, double val);
+void matrixRowAdd(Matrix* m1, int row1, const Matrix* m2, int row2);
+Matrix* matrixRowAddDestCreate(const Matrix* m1, int row1, const Matrix* m2, int row2);

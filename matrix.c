@@ -30,7 +30,7 @@ void matrixIdentity(Matrix* m) {
 }
 
 char matrixIsIdentity(Matrix* m) {
-    if (m->cols != m->rows){
+    if (m->cols != m->rows) {
         return 0;
     }
     for (int i = 0; i < m->rows; i++) {
@@ -143,7 +143,7 @@ Matrix matRow(Matrix* m, int row) {
 void matFunc(Matrix* m, double (*callbackFunc)(double d)) {
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
-            MAT_AT(m,i,j) = callbackFunc(MAT_AT(m, i, j));
+            MAT_AT(m, i, j) = callbackFunc(MAT_AT(m, i, j));
         }
     }
 }
@@ -157,4 +157,32 @@ void matrixShuffleRows(Matrix* m) {
             MAT_AT(m, randRow, j) = save;
         }
     }
+}
+
+void matrixRowSwap(Matrix* m1, int row1, Matrix* m2, int row2) {
+    double save = MAT_AT(m1, row1, row2);
+    MAT_AT(m1, row1, row2) = MAT_AT(m2, row2, row1);
+    MAT_AT(m2, row2, row1) = save;
+}
+
+void matrixRowScalar(Matrix* m, int row, double val) {
+    for (int j = 0; j < m->cols; j++) {
+        MAT_AT(m, row, j) *= val;
+    }
+}
+
+void matrixRowAdd(Matrix* m1, int row1, const Matrix* m2, int row2){
+    assert(m1->rows == m2->rows && m1->cols == m2->cols);
+    for (int j = 0; j < m1->cols; j++) {
+        MAT_AT(m1, row1, j) += MAT_AT(m2, row2, j);
+    }
+}
+
+Matrix* matrixRowAddDestCreate(const Matrix* m1, int row1, const Matrix* m2, int row2){
+    assert(m1->rows == m2->rows && m1->cols == m2->cols);
+    Matrix* dest = matrixCreate(1, m1->cols);
+    for (int j = 0; j < m1->cols; j++) {
+        MAT_AT(dest, 0, j) = MAT_AT(m1, row1, j) + MAT_AT(m2, row2, j);
+    }
+    return dest;
 }
