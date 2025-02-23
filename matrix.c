@@ -171,18 +171,57 @@ void matrixRowScalar(Matrix* m, int row, double val) {
     }
 }
 
-void matrixRowAdd(Matrix* m1, int row1, const Matrix* m2, int row2){
+void matrixRowAdd(Matrix* m1, int row1, const Matrix* m2, int row2) {
     assert(m1->rows == m2->rows && m1->cols == m2->cols);
     for (int j = 0; j < m1->cols; j++) {
         MAT_AT(m1, row1, j) += MAT_AT(m2, row2, j);
     }
 }
 
-Matrix* matrixRowAddDestCreate(const Matrix* m1, int row1, const Matrix* m2, int row2){
+Matrix* matrixRowAddDestCreate(const Matrix* m1, int row1, const Matrix* m2,
+                               int row2) {
     assert(m1->rows == m2->rows && m1->cols == m2->cols);
     Matrix* dest = matrixCreate(1, m1->cols);
     for (int j = 0; j < m1->cols; j++) {
         MAT_AT(dest, 0, j) = MAT_AT(m1, row1, j) + MAT_AT(m2, row2, j);
     }
+    return dest;
+}
+
+Matrix* matrixSubmatrixCreate(const Matrix* m, int* rowArrIdxs, int rowArrLen,
+                           int* colArrIdxs, int colArrLen) {
+    assert(m->rows > rowArrLen && m->cols > colArrLen);
+    Matrix* dest = matrixCreate(m->rows - rowArrLen, m->cols - colArrLen);
+
+    int ic = 0;
+    int jc = 0;
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            char shouldAssign = 1;
+            for (int ia = 0; ia < rowArrLen; ia++) {
+                if (i == rowArrIdxs[ia]) {
+                    shouldAssign = 0;
+                }
+            }
+            if (!shouldAssign) {
+                continue;
+            }
+            for (int ja = 0; ja < colArrLen; ja++) {
+                if (j == colArrIdxs[ja]) {
+                    shouldAssign = 0;
+                }
+            }
+            if (shouldAssign) {
+                // TODO: For some reason you need to flip jc and ic for it to work. I don't understand why. Look into this
+                MAT_AT(dest, jc, ic) = MAT_AT(m, i, j);
+                ic++;
+                if (ic >= m->rows - rowArrLen){
+                    ic = 0;
+                    jc++;
+                }
+            }
+        }
+    }
+
     return dest;
 }

@@ -123,3 +123,4 @@ void matrixRowSwap(Matrix* m1, int row1, Matrix* m2, int row2);
 void matrixRowScalar(Matrix* m, int row, double val);
 void matrixRowAdd(Matrix* m1, int row1, const Matrix* m2, int row2);
 Matrix* matrixRowAddDestCreate(const Matrix* m1, int row1, const Matrix* m2, int row2);
+Matrix* matrixSubmatrixCreate(const Matrix* m, int* rowArrIdxs, int rowArrLen, int* colArrIdxs, int colArrLen);
