@@ -1,8 +1,7 @@
-project('proj', 'c',
-  version : '0.1',
-  default_options : ['warning_level=3'])
+project('shared lib', 'c')
+lib = library('matrixMath', 'matrix.c')
 
-exe = executable('proj', 'proj.c', 'hello.c',
-  install : true)
+exe = executable('tests', 'tests.c',
+  install : true, link_with : lib)
 
 test('basic', exe)
