@@ -1,10 +1,7 @@
+#define MATRIX_IMPLEMENTATION
 #include "matrix.h"
 #include <assert.h>
 #include <stdio.h>
-
-#define PROJECT_NAME "proj"
-
-#define shift(xs, xs_sz) (assert(xs_sz > 0), --xs_sz, *xs++)
 
 void fillMatrixByCounting(Matrix* m) {
     double c = 0;
