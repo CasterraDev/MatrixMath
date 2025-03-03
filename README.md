@@ -1,4 +1,4 @@
-# Linear Allocator
+# Matrix Math
 
 Just put the header file in your project then define above the include
 
